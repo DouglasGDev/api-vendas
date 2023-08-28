@@ -3,6 +3,7 @@ import UsersRepository from "../typeorm/repositories/UsersRepository";
 import UserTokensRepository from "../typeorm/repositories/UserTokensRepository";
 import EtherealMail from "@config/mail/EtherealMail";
 import AppError from "@shared/errors/AppError";
+import path from 'path';
 
 
 // o serviço tem uma única responsabilidade de apenas enviar a recuperação de senha por e-mail do usuário
@@ -22,7 +23,7 @@ class SendForgotPasswordEmailService { // reponsável por enviar o email de recu
 
       const {token} = await userTokensRepository.generate(user.id);// aqui passa o id de usuário para se gerar o token
 
-      //console.log(token);
+      const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
 
       await EtherealMail.sendMail({
         to: {
@@ -32,10 +33,10 @@ class SendForgotPasswordEmailService { // reponsável por enviar o email de recu
         },
         subject: '[Api Vendas] Recuperação de senha',
         templateData: {
-          template: `Olá {{name}}: {{token}}`,
+          file: forgotPasswordTemplate, // arquivo do template
           variables: {
             name: user.name,
-            token,
+            link: `http://localhost:3000/reset_password?token=${token}`,
 
           }
         }, // aqui está mandando o token pro fake email
