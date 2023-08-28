@@ -11,7 +11,7 @@ interface ITemplateVariable {
 }
 
 interface IParseMailTemplate { // essa interface é para definir o parse abaixo, ou seja, o parse é responsável por transmitir o html, a estrutura
-  template: string;
+  file: string;
   variables:  ITemplateVariable;
 }
 
