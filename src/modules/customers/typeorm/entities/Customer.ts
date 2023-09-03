@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('customers')  // a entide comunica direto com a tabela users do db
-class Customers {
+class Customer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,4 +18,4 @@ class Customers {
   updated_at: Date;
 }
 
-export default Customers;
+export default Customer;
