@@ -3,6 +3,7 @@ import productsRouter from "@modules/products/routes/products.routes";
 import usersRouter from "@modules/users/routes/users.routes";
 import sessionsRouter from "@modules/users/routes/sessions.routes";
 import passwordRouter from "@modules/users/routes/password.routes";
+import profileRouter from "@modules/users/routes/profile.routes";
 
 const routes = Router();
 
@@ -11,4 +12,5 @@ routes.use('/products', productsRouter);// rota dos produtos, onde tem o crud de
 routes.use('/users', usersRouter); // rota de usuarios, criar e listar
 routes.use('/sessions', sessionsRouter);// rota de autenticação da sessão
 routes.use('/password', passwordRouter);// rota que mexe com senhas
+routes.use('/profile', profileRouter); // rota de perfil de usuário
 export default routes;
