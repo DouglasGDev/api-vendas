@@ -31,7 +31,7 @@ class SendForgotPasswordEmailService { // reponsável por enviar o email de recu
           email: user.email,
 
         },
-        subject: '[Api Vendas] Recuperação de senha',
+        subject: '[SaleSync] Recuperação de senha',
         templateData: {
           file: forgotPasswordTemplate, // arquivo do template
           variables: {
