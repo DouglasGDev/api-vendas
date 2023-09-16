@@ -55,6 +55,19 @@ class CreateOrderService {
           throw new AppError(`A quantidade  ${quantityAvailable[0].quantity} não está disponível para ${quantityAvailable[0].id}.`); // aqui solta o erro de quantidade indisponivel para tal produto.
         }
 
+        const serializedProducts = products.map(
+          product => ({
+            product_id: product.id,
+            quantity: product.quantity,
+            price: existsProducts.filter(p => p.id === product.id)[0].price, // aqui pega o preço dos produtos
+          })
+        );
+
+          const order = await ordersRepository.createOrder({ // aqui está criando a ordem do pedido. com o cliente e seus produtos solicitados.
+            customer: customerExists,
+            products: serializedProducts,
+          })
+
     }
 }
 
