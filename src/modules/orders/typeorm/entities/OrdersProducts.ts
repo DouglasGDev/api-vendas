@@ -16,6 +16,12 @@ class OrdersProducts {
   @JoinColumn({name: 'product_id'}) // e qual a coluna que faz a ligação da referencia
   product: Product;
 
+  @Column()
+  order_id: string;
+
+  @Column()
+  product_id: string;
+
   @Column('decimal')
   price: number;
 

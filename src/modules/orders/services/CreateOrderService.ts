@@ -66,7 +66,11 @@ class CreateOrderService {
           const order = await ordersRepository.createOrder({ // aqui está criando a ordem do pedido. com o cliente e seus produtos solicitados.
             customer: customerExists,
             products: serializedProducts,
-          })
+          });
+
+          return order;
+
+
 
     }
 }
