@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateSessionsService from '../services/CreateSessionsService';
+import { instanceToInstance } from 'class-transformer';
 
 // controller de criar sessão
 export default class SessionsController {
@@ -13,6 +14,6 @@ export default class SessionsController {
       password
     });
 
-    return response.json(user); // aqui retorna a sessão user no json
+    return response.json(instanceToInstance(user)); // aqui retorna a sessão user no json
   }
 }

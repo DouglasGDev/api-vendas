@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')  // a entide comunica direto com a tabela users do db
 class User {
@@ -12,6 +13,7 @@ class User {
   email: string;
 
   @Column()
+  @Exclude()// para não trazer a senha junto no corpo da requisição da api.
   password: string;
 
   @Column()
@@ -22,6 +24,15 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({name: 'avatar_url'})// campo "virtual" para alocar informações do foto d perfil do avatar, link que abre na web
+  getAvatarUrl(): string | null {
+    if(!this.avatar){
+      return null;
+    }
+
+    return `${process.env.APP_API_URL}/files/${this.avatar}`// aqui é para retornar o link da foto de avatar no json
+  }
 }
 
 export default User;
