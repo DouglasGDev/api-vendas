@@ -25,7 +25,7 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Expose({name: 'avatar_url'})// campo "virtual" para alocar informações do foto d perfil do avatar, link que abre na web
+  @Expose({name: 'avatar_url'})// campo "virtual" para alocar informações do foto de perfil do avatar, link que abre na web
   getAvatarUrl(): string | null {
     if(!this.avatar){
       return null;
