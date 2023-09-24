@@ -15,11 +15,22 @@ export default class RedisCache {
 
   }
 
-  //public async recover<T>(key: string): Promise<T | null> {// get, pesquisa
-   // console.log(key);
-  //}
+  public async recover<T>(key: string): Promise<T | null> {// get, pesquisa, ele vai pegar a pesquisa do listar e transformar a lista em string, caso não encontre nada ele volta os dados ao que era antes e
+    // salva na variavel que faz voltar o array ao que era e retorna a variável
+    const data = await this.client.get(key);
 
-  // public async invalidate(key: string) : Promise<void> { // delete, vai servir para deletar cache para não ficar armazenando informação e lotar
+    if(!data){
+      return null;
+    }
 
-  // }
+    const parsedData = JSON.parse(data) as T;
+
+    return parsedData;
+
+  }
+
+   public async invalidate(key: string) : Promise<void> { // delete, vai servir para deletar cache para não ficar armazenando informação e lotar
+    // pega a chave invalida e deleta do cache
+    await this.client.del(key);
+   }
 }
