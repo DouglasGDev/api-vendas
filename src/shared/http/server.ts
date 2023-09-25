@@ -8,6 +8,7 @@ import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm'; // por aqui ele procura automatico o arquivo ormconfig.json e faz conexão no db
 import uploadConfig from '@config/upload';
+import rateLimiter from './middlewares/rateLimiter';
 
 const app = express();
 
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(rateLimiter);
 
 app.use('/files', express.static(uploadConfig.directory));// rota estática para acessar imagens de avatar de usuários no browser
 app.use(routes);
