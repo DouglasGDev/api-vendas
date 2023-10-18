@@ -27,24 +27,21 @@ interface ISendMail { // interface que recebe os parametros pra passar pra class
 
 export default class SESMail {
   static async sendMail({ to, from,subject,templateData }: ISendMail): Promise<void> {
-    const account = await nodemailer.createTestAccount(); //  conta de teste
 
     const mailTemplate = new HandlebarsMailTemplate();
 
     const transporter = await nodemailer.createTransport({ // metodo smtp de transporte de dados
-      host: account.smtp.host, // smtp é a porta de transferencia de email simples, ai precisa desses parametros
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-            user: account.user,
-            pass: account.pass
-        }
+      SES: new aws.SES({
+        apiVersion: '2010-12-01', // configuração da api da amazon
+      }),
     });
+
+    const {email, name} = mailConfig.defaults.from;
 
     const message = await transporter.sendMail({
       from: {
-        name: from?.name || 'Equipe Api Vendas',
-        address: from?.email || 'equipe@apivendas.com.br',
+        name: from?.name || name,
+        address: from?.email || email,
       },
       to: {
         name: to.name,
@@ -54,8 +51,6 @@ export default class SESMail {
       html: await mailTemplate.parse(templateData),
     });
 
-    console.log('Message sent: %s', message.messageId); // o %s é para pegar o valor da variável que está depois da virgula e innclui dentro da mensagem
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
   }
 
 
