@@ -10,7 +10,7 @@ export default {
   directory: uploadFolder, // diretorio definido
   tmpFolder,
   storage: multer.diskStorage({ // aqui vai mexer com upload de fotos, arquivos o multer
-    destination: uploadFolder, // para onde vai o upload
+    destination: tmpFolder, // para onde vai o upload
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString('hex'); //aqui vai criar uma hash para o nome da foto upada, para não haver fotos com o mesmo nome.
 

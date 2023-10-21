@@ -18,7 +18,7 @@ export default class DiskStorageProvider {
 
     try {
       await fs.promises.stat(filePath); // verifica o estato, se tem alguma foto, arquivo no filepath e se tiver ele muda do temp para o diretorio que foi atribuido
-    }catch{
+    }catch(err){
       return;
     }
 
