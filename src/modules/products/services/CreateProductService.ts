@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
 import AppError from "@shared/errors/AppError";
 import Product from "../typeorm/entities/Product";
-import RedisCache from "@shared/cache/RedisCache";
+import redisCache from "@shared/cache/RedisCache";
 // o serviço tem uma única responsabilidade de apenas criar o produto
 // a regra de aplicação é não permitir cadastrar o produto com mesmo nome
 interface IRequest {
@@ -21,7 +21,7 @@ class CreateProductService {
           throw new AppError('Há um produto com esse mesmo nome'); // aqui verifica se tem produuto com o mesmo nome cadastrado, se houver não cadastra
         }
 
-        const redisCache = new RedisCache();// para armazenar as informações pesquisadas em cache, por exemplo criar produtos aqui
+        //const redisCache = new RedisCache();// para armazenar as informações pesquisadas em cache, por exemplo criar produtos aqui
 
 
         const product = productsRepository.create({ // aqui prepara(só monta o objeto, não precisa do await) o objeto para ser enviado para o db

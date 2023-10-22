@@ -1,14 +1,14 @@
 import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
 import Product from "../typeorm/entities/Product";
-import RedisCache from "@shared/cache/RedisCache";
+import redisCache from "@shared/cache/RedisCache";
 // o serviço tem uma única responsabilidade de apenas listar o produto
 
 class ListProductService {
     public async execute(): Promise<Product[]> {
         const productsRepository = getCustomRepository(ProductRepository);
 
-        const redisCache = new RedisCache();// para armazenar as informações pesquisadas em cache, por exemplo lista de produtos aqui
+        //const redisCache = new RedisCache();// para armazenar as informações pesquisadas em cache, por exemplo lista de produtos aqui
 
         let products = await redisCache.recover<Product[]>('api-SalesSync-PRODUCT_LIST',);// chave da lista de produtos a ser salva, no caso um array
 

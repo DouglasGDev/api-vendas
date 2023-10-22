@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
 import Product from "../typeorm/entities/Product";
 import AppError from "@shared/errors/AppError";
-import RedisCache from "@shared/cache/RedisCache";
+import redisCache from "@shared/cache/RedisCache";
 // o serviço tem uma única responsabilidade de apenas atualizar um produto
 
 interface IRequest {
@@ -34,7 +34,7 @@ class UpdateProductService {
           throw new AppError('Há um produto com esse mesmo nome'); // aqui verifica se tem produto com o mesmo nome cadastrado, se houver não cadastra
         }
 
-        const redisCache = new RedisCache();// vai atuar como cache, abaixo se for atualizado o produto ele vai invalidar o serviço e atualizar o cache de produtos pesquisados e retorna o que há.
+        //const redisCache = new RedisCache();// vai atuar como cache, abaixo se for atualizado o produto ele vai invalidar o serviço e atualizar o cache de produtos pesquisados e retorna o que há.
 
         await redisCache.invalidate('api-SalesSync-PRODUCT_LIST');// aqui ele faz o serviço de deletar o cache e fazer a substituição do cache atual.
 
