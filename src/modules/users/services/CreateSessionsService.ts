@@ -3,7 +3,7 @@ import  UsersRepository  from "../typeorm/repositories/UsersRepository";
 import AppError from "@shared/errors/AppError";
 import User from "../typeorm/entities/User";
 import { compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
+import { Secret, sign } from "jsonwebtoken";
 import authConfig from "@config/auth";
 
 // o serviço tem uma única responsabilidade de apenas criar o usuário
@@ -32,7 +32,7 @@ class CreateSessionsService { // reponsável por criar sessão conta de usuário
         throw new AppError('Combinação incorreta de email/senha.', 401); // aqui verifica se tem usuario com o email cadastrado
       }
 
-      const token = sign({}, authConfig.jwt.secret, { // aqui cria o token e puxa do authConfig
+      const token = sign({}, authConfig.jwt.secret as Secret, { // aqui cria o token e puxa do authConfig
         subject: user.id, // vai entregar o id de usuário no token
         expiresIn: authConfig.jwt.expiresIn, // expira a cada 24h
       });
