@@ -10,7 +10,7 @@ export default class S3StorageProvider {
 
   constructor() {
     this.client = new aws.S3({
-      region: process.env.AWS_REGION
+      region: process.env.AWS_REGION,
     });
   }
   public async saveFile(file: string) : Promise<string> {
@@ -22,7 +22,7 @@ export default class S3StorageProvider {
       throw new Error('Arquivo não encontrado');// se não houver arquivo ele retorna esse erro
     }
 
-    const fileContent = fs.promises.readFile(originalPath);
+    const fileContent = await fs.promises.readFile(originalPath);
 
     await this.client.putObject({
       Bucket: uploadConfig.config.aws.bucket,

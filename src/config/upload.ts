@@ -10,17 +10,17 @@ interface IUploadConfig {
   tmpFolder: string;
   directory: string;
   multer: {
-    storage: StorageEngine,
+    storage: StorageEngine;
   };
   config: {
-    disk: {},
     aws: {
-      bucket: string,
+      bucket: string;
     };
   };
-};
+}
 
 export default {
+  driver: process.env.STORAGE_DRIVER,
   directory: uploadFolder, // diretorio definido
   tmpFolder,
   multer: {
@@ -40,6 +40,6 @@ export default {
     aws: {
       bucket: 'salessync-bucket',
 
-    }
-  }
+    },
+  },
 } as IUploadConfig;
