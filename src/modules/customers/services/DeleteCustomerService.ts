@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import AppError from "@shared/errors/AppError";
-import CustomersRepository from "../typeorm/repositories/CustomersRepository";
+import CustomersRepository from "../infra/typeorm/repositories/CustomersRepository";
 // o serviço tem uma única responsabilidade de apenas deletar o cliente
 
 interface IRequest {

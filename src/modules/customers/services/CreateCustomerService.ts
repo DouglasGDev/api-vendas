@@ -1,17 +1,15 @@
 import { getCustomRepository } from "typeorm";
 import AppError from "@shared/errors/AppError";
 import { hash } from "bcryptjs";
-import Customer from "../typeorm/entities/Customer";
-import CustomersRepository from "../typeorm/repositories/CustomersRepository";
+import Customer from "../infra/typeorm/entities/Customer";
+import CustomersRepository from "../infra/typeorm/repositories/CustomersRepository";
+import { ICreteCustomer } from "../domain/models/ICreateCustomer";
 
 // o serviço tem uma única responsabilidade de apenas criar o usuário de cliente
 // a regra de aplicação é não permitir cadastrar o mesmo email
-interface IRequest {
-   name: string;
-   email: string;
-}
+
 class CreateCustomerService { // reponsável por criar conta de usuários dos clientes
-    public async execute({name, email}: IRequest): Promise<Customer> {
+    public async execute({name, email}: ICreteCustomer): Promise<Customer> {
       const customersRepository = getCustomRepository(CustomersRepository);// aqui pega o repositorio customizado, onde fica os métodos
       const emailExists = await customersRepository.findByEmail(email);// pega email do repositorio customizado
 
