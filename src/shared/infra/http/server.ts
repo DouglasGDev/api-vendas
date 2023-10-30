@@ -7,6 +7,7 @@ import cors from 'cors';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/infra/typeorm'; // por aqui ele procura automatico o arquivo ormconfig.json e faz conexão no db
+import '@shared/container';// aqui chama a injeção de dependencia do container para estar em uso
 import uploadConfig from '@config/upload';
 import rateLimiter from './middlewares/rateLimiter';
 

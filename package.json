@@ -62,9 +62,8 @@
     "rate-limiter-flexible": "^3.0.0",
     "redis": "^4.6.10",
     "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.8.0",
     "typeorm": "0.2.29",
     "typeorm-pagination": "^2.0.3"
   }
-
 }
-

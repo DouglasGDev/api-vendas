@@ -3,12 +3,17 @@ import AppError from "@shared/errors/AppError";
 import { ICreateCustomer } from "../domain/models/ICreateCustomer";
 import { ICustomer } from "../domain/models/ICustomer";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
+import { injectable, inject } from "tsyringe";
 
 // o serviço tem uma única responsabilidade de apenas criar o usuário de cliente
 // a regra de aplicação é não permitir cadastrar o mesmo email
 
+@injectable()// esta dizendo que essa classe é injetavel
 class CreateCustomerService { // reponsável por criar conta de usuários dos clientes
-  constructor (private customersRepository: ICustomersRepository) {
+  constructor (
+    @inject('CustomersRepository')// o que está sendo injetado
+    private customersRepository: ICustomersRepository
+    ) {
 
   }
     public async execute({name, email}: ICreateCustomer): Promise<ICustomer> {

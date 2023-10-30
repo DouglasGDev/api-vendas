@@ -4,7 +4,7 @@ import ShowCustomerService from "../../../services/ShowCustomerService";
 import CreateCustomerService from "../../../services/CreateCustomerService";
 import UpdateCustomerService from "../../../services/UpdateCustomerService";
 import DeleteCustomerService from "../../../services/DeleteCustomerService";
-import CustomersRepository from "../../typeorm/repositories/CustomersRepository";
+import {container} from 'tsyringe';
 
 
 export default class CustomersController {
@@ -28,9 +28,7 @@ export default class CustomersController {
   public async create(request:Request, response: Response): Promise<Response> { // para criar um cliente
     const {name, email} = request.body;
 
-    const customersRepository = new CustomersRepository();
-
-    const createCustomer = new CreateCustomerService(customersRepository);// chama o serviço reponsável por criar o cliente
+    const createCustomer = container.resolve(CreateCustomerService);// carrega o serviço injetado, que carrega a chave de dependencia que injeta o serviço e tudo passa funcionar automaticamente
 
     const customer = await createCustomer.execute({ // recebe os datos para criar o cliente
       name,
