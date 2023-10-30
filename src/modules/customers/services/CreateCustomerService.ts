@@ -1,31 +1,32 @@
-import { getCustomRepository } from "typeorm";
+
 import AppError from "@shared/errors/AppError";
-import { hash } from "bcryptjs";
-import Customer from "../infra/typeorm/entities/Customer";
-import CustomersRepository from "../infra/typeorm/repositories/CustomersRepository";
-import { ICreteCustomer } from "../domain/models/ICreateCustomer";
+import { ICreateCustomer } from "../domain/models/ICreateCustomer";
+import { ICustomer } from "../domain/models/ICustomer";
+import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 
 // o serviço tem uma única responsabilidade de apenas criar o usuário de cliente
 // a regra de aplicação é não permitir cadastrar o mesmo email
 
 class CreateCustomerService { // reponsável por criar conta de usuários dos clientes
-    public async execute({name, email}: ICreteCustomer): Promise<Customer> {
-      const customersRepository = getCustomRepository(CustomersRepository);// aqui pega o repositorio customizado, onde fica os métodos
-      const emailExists = await customersRepository.findByEmail(email);// pega email do repositorio customizado
+  constructor (private customersRepository: ICustomersRepository) {
+
+  }
+    public async execute({name, email}: ICreateCustomer): Promise<ICustomer> {
+
+      const emailExists = await this.customersRepository.findByEmail(email);// pega email do repositorio customizado
 
       if(emailExists) {
         throw new AppError('Esse endereço de email ja está em uso.'); // aqui verifica se o email ja existe
       }
 
 
-      const customers = customersRepository.create({ // aqui prepara(só monta o objeto, não precisa do await) o objeto para ser enviado para o db
+      const customer = await this.customersRepository.create({ // aqui prepara o objeto para ser enviado para o db e salva
           name,
           email,
       });
 
-      await customersRepository.save(customers);// aqui salva o que foi preparado e envia para o db
 
-      return customers;
+      return customer;
     }
 }
 
